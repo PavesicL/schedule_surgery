@@ -12,6 +12,7 @@ The input to the program are three files:
 - seznam zelja, v formatu .tsv.
 - master sheet, kjer je oznaceno na katerih deloviscih dela specializant, in koliko dezurstev se mu oprosti. Format .tsv.
 - config.json, z zacetnim in koncnim datumom, in modelskimi utezmi.
+- delno izpolnjen urnik; kot prosti se vpostevajo le tisti termini, ki so na tem urniku prazni.
 
 Glej examples/ za primer.
 
@@ -19,8 +20,6 @@ Glej examples/ za primer.
 
 Vsak dan imamo pet dnevnih delovisc (KRG-B, KRG-ABD, KRG-MOP, KRG4, KRG5), tri nocna delovisca (KRG-B-N, KRG-MOP-N, KRGN-ABD-N), in pripravljenost ABD-PRIP. 
 Na vsako je razpisana tocno ena oseba. 
-
-Dodatno je input ze definiran urnik specializantov URG, ki se ga ne spreminja. 
 
 ## Hard constraints
 
