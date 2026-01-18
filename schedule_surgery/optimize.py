@@ -4,6 +4,7 @@ Contains the construction of the model.
 import os
 import csv
 import math
+import pandas as pd
 from ortools.sat.python import cp_model
 
 from schedule_surgery.days import Day
@@ -13,7 +14,7 @@ import schedule_surgery.workplaces as wps
 def construct_and_optimize(worker_list : list[Worker],
                            day_list : list[Day],
                            preschedule : list[list[str, Day, str]],
-                           config : dict) -> None:
+                           config : dict) -> pd.DataFrame:
     """
     Defines the model used for optimization, and optimizes it.
 
@@ -698,5 +699,6 @@ def construct_and_optimize(worker_list : list[Worker],
             wr.writerow(row)
 
     ########################################################################
-
-
+    df_schedule = pd.DataFrame(schedule_array)
+    df_stats = pd.DataFrame(shifts_count_array)
+    return df_schedule, df_stats

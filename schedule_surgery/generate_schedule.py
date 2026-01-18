@@ -26,7 +26,6 @@ def main():
     with open(args.config) as f:
         config = json.load(f)
 
-
     # parse the dates
     start_date = date.fromisoformat(config["start_date"])
     end_date = date.fromisoformat(config["end_date"])
