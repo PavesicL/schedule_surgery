@@ -1,3 +1,3 @@
 streamlit
 pandas
-or-tools
+ortools
