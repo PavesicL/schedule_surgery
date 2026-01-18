@@ -1,0 +1,10 @@
+[project]
+name = "scheduling-surgery"
+version = "0.0.1"
+authors = [{ name = "Luka Pavesic" }]
+readme = "README.md"
+dependencies = ["ortools", "holidays", "numpy"]
+
+
+[project.scripts]
+schedule-surgery = "schedule_surgery.generate_schedule:main"
