@@ -389,7 +389,7 @@ def construct_and_optimize(worker_list : list[Worker],
                 if eligible_days < config["krozeci_scheduled"]:
                     raise Exception(f"{worker.name} is Krožeči and should be scheduled {config['krozeci_scheduled']}x, but can only work {eligible_days} days.")
 
-                model.Add( sum(work[ww, dd, pp] for dd in range(num_days) for pp in range(num_workplaces)) == config["krozeci_scheduled"])
+                model.Add( sum(work[ww, dd, pp] for dd in range(num_days) for pp in wps.range_connected_workplaces) == config["krozeci_scheduled"])
 
     # Constraint #######################################################################
     # worker.included == "OMEJENO" are special. They are scheduled a pre-set number of times.

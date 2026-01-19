@@ -25,6 +25,7 @@ NIGHT_WORKPLACES = ALL_WORKPLACES[5:8]
 
 range_day_workplaces = range(0, 5)
 range_night_workplaces = range(5, 8)
+range_connected_workplaces = range(0, 8)
 range_unconnected_workplaces = range(8, 11)
 
 def get_ndx(name : str) -> int:
