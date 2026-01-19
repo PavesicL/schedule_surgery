@@ -198,6 +198,22 @@ def construct_and_optimize(worker_list : list[Worker],
                     model.Add(sum(work[ww, dd, ppd] for ppd in wps.range_day_workplaces) + sum(work[ww, dd, ppn] for ppn in wps.range_night_workplaces) <= 1 )
 
     # Constraint #######################################################################
+    # do not schedule unconnected workplaces if working something else already
+
+    if 1:
+        # Can't work at unconnected workplaces if already working elsewhere
+        for ww in range(num_workers):
+            for dd in range(num_days):
+                # At most 1 workplace total if any is unconnected
+                # This ensures: if at unconnected workplace, nowhere else; if elsewhere, not at unconnected
+
+                is_at_unconnected = model.NewBoolVar(f'at_unconnected_{ww}_{dd}')
+                model.AddMaxEquality(is_at_unconnected, [work[ww, dd, pp] for pp in wps.range_unconnected_workplaces])
+
+                # If at unconnected, total workplaces must be exactly 1 (the unconnected one)
+                model.Add(sum(work[ww, dd, pp] for pp in range(num_workplaces)) == 1).OnlyEnforceIf(is_at_unconnected)
+
+    # Constraint #######################################################################
     # do not work more that two consecutive days
     # First, create "is working" variables for all workers and days
     is_working = {}
