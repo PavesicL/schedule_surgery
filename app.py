@@ -82,14 +82,6 @@ if st.button("🚀 Generate Schedule"):
         # everything to string because streamlit has problems
         df_stats = df_stats.astype(str)
 
-
-        st.subheader("Stats Preview")
-        st.dataframe(df_stats)
-
-        st.subheader("Schedule Preview")
-        st.dataframe(df_schedule)
-
-
         # Store everything in a dictionary inside session_state
         st.session_state.results = {
             'df_schedule': df_schedule,
@@ -109,7 +101,7 @@ if st.button("🚀 Generate Schedule"):
         st.dataframe(df_stats)
 
         st.subheader("Schedule Preview")
-        st.dataframe()
+        st.dataframe(df_schedule)
 
 
         tsv_schedule = df_schedule.to_csv(sep='\t', index=False).encode('utf-8')
