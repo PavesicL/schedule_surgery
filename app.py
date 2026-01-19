@@ -74,9 +74,17 @@ if st.button("🚀 Generate Schedule"):
         df_schedule = pd.DataFrame(schedule_array)
         df_stats = pd.DataFrame(stats_array)
 
+        st.subheader("Stats Preview")
+        st.dataframe(df_stats)
+
         st.subheader("Schedule Preview")
         st.dataframe(df_schedule)
+
 
         # Download buttons
         tsv_schedule = df_schedule.to_csv(sep='\t', index=False).encode('utf-8')
         st.download_button("📥 Download Schedule (.tsv)", tsv_schedule, "schedule.tsv")
+
+        # Download buttons
+        tsv_stats = df_stats.to_csv(sep='\t', index=False).encode('utf-8')
+        st.download_button("📥 Download stats (.tsv)", tsv_stats, "stats.tsv")
