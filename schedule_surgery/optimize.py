@@ -595,7 +595,7 @@ def construct_and_optimize(worker_list : list[Worker],
         wp_weight = lambda day, workplace_ndx : weight_night if workplace_ndx in list(wps.range_night_workplaces) else weight_workday if day.is_workday else weight_weekend
 
         total = model.NewIntVar(0, max_possible_work, f'total_workload_{ww}')
-        model.Add(total == sum( wp_weight(day, pp) * work[ww, dd, pp] for dd, day in enumerate(day_list) for pp in range(num_workplaces)) )
+        model.Add(total == sum( wp_weight(day, pp) * work[ww, dd, pp] for dd, day in enumerate(day_list) for pp in list(wps.range_day_workplaces) + list(wps.range_night_workplaces) ) )
         total_workloads.append(total)
         worker_list_for_workload.append(worker) # we are ignoring "KROZECI" se we need a new list
 

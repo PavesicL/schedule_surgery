@@ -1,6 +1,6 @@
 
-example/
-example/*
+example*/
+example*/*
 
 # Byte-compiled / optimized files
 __pycache__/
