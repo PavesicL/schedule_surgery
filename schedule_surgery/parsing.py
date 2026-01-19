@@ -246,15 +246,17 @@ def parse_work_dates(entries : list[str], columns : list[str]):
         # nans a transformed to "Mi je vseeno"
         entry = transform_nan(entry, "Mi je vseeno")
 
-        if entry in ["DA (želim delati)", ]:
+        entry = entry.lower()
+
+        if entry in ["da (želim delati)", ]:
             res = [1, 1]
-        elif entry in [ "LD (letni dopust)", "Dežurstvo, matični dan" ]:
+        elif entry in [ "ld (letni dopust)", "dežurstvo, matični dan" ]:
             res = [-1, -1]
-        elif entry in [ "Mi je vseeno", ]:
+        elif entry in [ "mi je vseeno", ]:
             res = [0, 0]
-        elif entry in [ "Samo podnevi (do 24.00)", ]:
+        elif entry in [ "samo podnevi (do 24.00)", ]:
             res = [0, -1]
-        elif entry in [ "Samo ponoči (po 19.00)", ]:
+        elif entry in [ "samo ponoči (po 19.00)", ]:
             res = [-1, 0]
         else:
             raise Exception(f"Unrecognized {entry=} while parsing workdates!")
