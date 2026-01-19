@@ -20,6 +20,11 @@ class StStdout:
     def flush(self):
         pass
 
+# --- 1. INITIALIZE SESSION STATE ---
+# This ensures we don't get errors if the keys don't exist yet
+if 'results' not in st.session_state:
+    st.session_state.results = None
+
 # --- 2. THE UI SETUP ---
 st.set_page_config(page_title="Surgery Scheduler", layout="wide")
 st.title("🏥 Surgery Schedule Optimizer")
@@ -85,10 +90,36 @@ if st.button("🚀 Generate Schedule"):
         st.dataframe(df_schedule)
 
 
-        # Download buttons
+        # Store everything in a dictionary inside session_state
+        st.session_state.results = {
+            'df_schedule': df_schedule,
+            'df_stats': df_stats,
+            'text': "Optimization Complete!"
+        }
+
+    if st.session_state.results is not None:
+        res = st.session_state.results
+
+        st.success(res['text'])
+
+        df_stats = res['df_stats']
+        df_schedule = res['df_schedule']
+
+        st.subheader("Stats Preview")
+        st.dataframe(df_stats)
+
+        st.subheader("Schedule Preview")
+        st.dataframe()
+
+
         tsv_schedule = df_schedule.to_csv(sep='\t', index=False).encode('utf-8')
-        st.download_button("📥 Download Schedule (.tsv)", tsv_schedule, "schedule.tsv")
+        tsv_stats = df_stats.to_csv(sep='\t', index=False).encode('utf-8')
 
         # Download buttons
-        tsv_stats = df_stats.to_csv(sep='\t', index=False).encode('utf-8')
+        st.download_button("📥 Download Schedule (.tsv)", tsv_schedule, "schedule.tsv")
         st.download_button("📥 Download stats (.tsv)", tsv_stats, "stats.tsv")
+
+
+    if st.button("Reset"):
+        st.session_state.results = None
+        st.rerun()
