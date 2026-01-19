@@ -454,7 +454,7 @@ def construct_and_optimize(worker_list : list[Worker],
     bonus_weekend_travmaprip = model.NewIntVar(0, len(weekend_pairs), "bonus_weekend_travmaprip")
     ndx_travma_prip = wps.get_ndx("TRAVMA")
 
-    # Calculate seniority tiers
+    # Calculate seniority tiers; preferrably assign this to older workers
     years = [worker.year_of_specialization for worker in worker_list]
     max_year = max(years)
 
@@ -547,6 +547,13 @@ def construct_and_optimize(worker_list : list[Worker],
     penalty_workplace_distribution = []
     for ww, worker in enumerate(worker_list):
         available_workplaces = worker.workplaces["YES"]
+
+        tmp = []
+        for awp in available_workplaces:
+            if awp not in wps.range_unconnected_workplaces:
+                tmp.append(awp)
+        available_workplaces = tmp
+
         if len(available_workplaces) <= 1:
             continue
 
