@@ -74,6 +74,10 @@ if st.button("🚀 Generate Schedule"):
         df_schedule = pd.DataFrame(schedule_array)
         df_stats = pd.DataFrame(stats_array)
 
+        # everything to string because streamlit has problems
+        df_stats = df_stats.astype(str)
+
+
         st.subheader("Stats Preview")
         st.dataframe(df_stats)
 
